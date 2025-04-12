@@ -52,10 +52,27 @@ pip install numpy matplotlib scikit-learn tqdm psutil
 - `evaluate.py`: Evaluation metrics and visualization
 - `data_loader.py`: Data loading and initial preprocessing
 - `preprocess.py`: Data preprocessing (standard and min-max scaling)
-- `advanced_ops.py`: Advanced operations (GELU, Adam)
 - `visualize.py`: Visualization utilities
-- `run_ablation_studies.py`: Script to run multiple model configurations
 - `Analysis.md`: Detailed explanation of all model components
+
+## Dataset
+
+The project uses MNIST dataset in NumPy format:
+
+- `data/train_data.npy`: Training data features
+- `data/train_label.npy`: Training data labels
+- `data/test_data.npy`: Test data features
+- `data/test_label.npy`: Test data labels
+
+## Model Implementation
+
+The neural network classifier is implemented from scratch using NumPy, with the following key components:
+
+1. **Forward Propagation**: Computes predictions in a layer-by-layer fashion
+2. **Backpropagation**: Calculates gradients for all parameters using the chain rule
+3. **Optimizers**: Implements SGD with momentum and Adam optimizer
+4. **Regularization**: Includes dropout, batch normalization, and L2 regularization
+5. **Activation Functions**: Provides ReLU and GELU activation functions
 
 ## Usage
 
@@ -79,28 +96,16 @@ To run the model with specific advanced features:
 
 ```bash
 # Standard scaling with GELU activation and Adam optimizer
-python3 main.py --preprocess standard --use_gelu --use_adam
+python3 main.py --preprocess standard --gelu --adam
 
 # Min-max scaling with GELU activation
-python3 main.py --preprocess minmax --use_gelu
+python3 main.py --preprocess minmax --gelu
 ```
-
-### Available Options
-
-Preprocessing:
-
-- `--preprocess standard`: Use standard scaling (mean=0, std=1)
-- `--preprocess minmax`: Use min-max scaling (range [0,1])
-
-Features:
-
-- `--use_gelu`: Use GELU activation instead of ReLU
-- `--use_adam`: Use Adam optimizer instead of SGD
 
 ### Customizing Hyperparameters
 
 ```bash
-python3 main.py --preprocess standard --use_gelu --use_adam \
+python3 main.py --preprocess standard --gelu --adam \
                 --hidden_sizes 512 256 128 \
                 --epochs 200 \
                 --batch_size 64 \
@@ -128,45 +133,28 @@ Output Options:
 - `--log_dir`: Directory to save logs (default: logs)
 - `--model_name`: Custom model name (default: auto-generated based on features)
 
-## Running Ablation Studies
+## Experimental Results
 
-The project includes a script to automatically run multiple model configurations to analyze the impact of individual components:
+The best model configuration achieves 97.82% accuracy on the test set with the following configuration:
 
-```bash
-python3 run_ablation_studies.py
-```
+- Preprocessing: Standard scaling
+- Activation: GELU
+- Optimizer: Adam
+- Hidden layers: [256, 128]
+- Dropout: 0.5
+- Batch Normalization: Enabled
 
-This script will:
+For a detailed analysis of experiments and results, please refer to `Analysis.md`.
 
-1. Create a timestamped directory in the logs folder (e.g., logs/ablation_20250412)
-2. Run experiments with various configurations:
-   - Baseline model with standard scaling
-   - Baseline model with min-max scaling
-   - Individual feature tests (GELU, Adam)
-   - Feature combinations
-   - Architecture variations
-   - Learning rate variations
-   - Dropout variations
-3. Save results in separate subdirectories for each experiment
-4. Generate a comprehensive summary of all experiments
+## Visualizations
 
-Each experiment has a timeout of 30 minutes to prevent hanging. Failed experiments are logged and reported in the summary.
+The model generates various visualizations during training and evaluation:
 
-### Viewing Ablation Results
+1. **Training History**: Shows the training/validation loss and accuracy over epochs
+2. **Confusion Matrix**: Visualizes the model's predictions across different classes
+3. **Model Comparison**: Compares different model configurations on key metrics
 
-After running the ablation studies:
-
-```bash
-python3 -c "from evaluate import ModelEvaluator; ModelEvaluator.compare_models('logs/ablation_YYYYMMDD')"
-```
-
-This will show a comparison table with:
-
-- Model name and features
-- Preprocessing method used
-- Accuracy and F1 score
-- Hyperparameters (dropout, learning rate, batch size, architecture)
-- Training configuration
+All visualizations are saved in the logs directory.
 
 ## Log Structure
 
@@ -180,13 +168,6 @@ logs/
   │   ├── model_history.json
   │   ├── preprocess_info.json
   │   └── confusion_matrix.png
-  │
-  └── ablation_YYYYMMDD/      # Ablation studies
-      ├── standard_baseline/
-      ├── minmax_baseline/
-      ├── standard_gelu/
-      ├── minmax_adam/
-      └── ...
 ```
 
 Each experiment directory contains complete metrics, history, and visualizations.
@@ -196,3 +177,11 @@ Each experiment directory contains complete metrics, history, and visualizations
 - Python 3.6+
 - NumPy, Matplotlib, scikit-learn, tqdm, psutil
 - Recommended: CPU with 4+ cores, 8GB+ RAM
+
+## Authors
+
+- Your Name
+
+## License
+
+This project is available for academic and educational purposes.

@@ -1,30 +1,5 @@
 import numpy as np
 
-def gelu(x):
-    """
-    GELU activation function: x * Φ(x)
-    where Φ(x) is the standard Gaussian CDF
-    
-    Args:
-        x: Input tensor
-    Returns:
-        GELU activation applied to input
-    """
-    return 0.5 * x * (1.0 + np.tanh(np.sqrt(2.0 / np.pi) * (x + 0.044715 * x**3)))
-
-def gelu_grad(x):
-    """
-    Gradient of GELU activation function
-    
-    Args:
-        x: Input tensor
-    Returns:
-        Gradient of GELU at x
-    """
-    cdf = 0.5 * (1.0 + np.tanh(np.sqrt(2.0 / np.pi) * (x + 0.044715 * x**3)))
-    pdf = 0.5 * np.sqrt(2.0 / np.pi) * (1.0 + 0.134145 * x**2) * (1 - np.tanh(np.sqrt(2.0 / np.pi) * (x + 0.044715 * x**3))**2)
-    return cdf + x * pdf
-
 class NeuralNetwork:
     def __init__(self, input_size=128, hidden_sizes=[256, 128], output_size=10, 
                  use_bn=True, dropout_prob=0.5, activation='relu'):
@@ -323,3 +298,28 @@ class AdamOptimizer:
                     
                     # Update parameters
                     layer[param_name] -= self.learning_rate * m_corrected / (np.sqrt(v_corrected) + self.epsilon)
+
+def gelu(x):
+    """
+    GELU activation function: x * Φ(x)
+    where Φ(x) is the standard Gaussian CDF
+    
+    Args:
+        x: Input tensor
+    Returns:
+        GELU activation applied to input
+    """
+    return 0.5 * x * (1.0 + np.tanh(np.sqrt(2.0 / np.pi) * (x + 0.044715 * x**3)))
+
+def gelu_grad(x):
+    """
+    Gradient of GELU activation function
+    
+    Args:
+        x: Input tensor
+    Returns:
+        Gradient of GELU at x
+    """
+    cdf = 0.5 * (1.0 + np.tanh(np.sqrt(2.0 / np.pi) * (x + 0.044715 * x**3)))
+    pdf = 0.5 * np.sqrt(2.0 / np.pi) * (1.0 + 0.134145 * x**2) * (1 - np.tanh(np.sqrt(2.0 / np.pi) * (x + 0.044715 * x**3))**2)
+    return cdf + x * pdf
