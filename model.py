@@ -1,5 +1,29 @@
 import numpy as np
-from advanced_ops import gelu, gelu_grad
+
+def gelu(x):
+    """
+    GELU activation function: x * Φ(x)
+    where Φ(x) is the standard Gaussian CDF
+    
+    Args:
+        x: Input tensor
+    Returns:
+        GELU activation applied to input
+    """
+    return 0.5 * x * (1.0 + np.tanh(np.sqrt(2.0 / np.pi) * (x + 0.044715 * x**3)))
+
+def gelu_grad(x):
+    """
+    Gradient of GELU activation function
+    
+    Args:
+        x: Input tensor
+    Returns:
+        Gradient of GELU at x
+    """
+    cdf = 0.5 * (1.0 + np.tanh(np.sqrt(2.0 / np.pi) * (x + 0.044715 * x**3)))
+    pdf = 0.5 * np.sqrt(2.0 / np.pi) * (1.0 + 0.134145 * x**2) * (1 - np.tanh(np.sqrt(2.0 / np.pi) * (x + 0.044715 * x**3))**2)
+    return cdf + x * pdf
 
 class NeuralNetwork:
     def __init__(self, input_size=128, hidden_sizes=[256, 128], output_size=10, 
@@ -235,3 +259,67 @@ class NeuralNetwork:
                 self.velocities[i]['beta'] = momentum * self.velocities[i]['beta'] - lr * grads[i]['beta']
                 layer['gamma'] += self.velocities[i]['gamma']
                 layer['beta'] += self.velocities[i]['beta']
+
+class AdamOptimizer:
+    def __init__(self, learning_rate=1e-3, beta1=0.9, beta2=0.999, epsilon=1e-8):
+        """
+        Adam Optimizer implementation
+        
+        Args:
+            learning_rate: Learning rate (default: 1e-3)
+            beta1: Exponential decay rate for first moment estimates (default: 0.9)
+            beta2: Exponential decay rate for second moment estimates (default: 0.999)
+            epsilon: Small constant for numerical stability (default: 1e-8)
+        """
+        self.learning_rate = learning_rate
+        self.beta1 = beta1
+        self.beta2 = beta2
+        self.epsilon = epsilon
+        self.m = None  # First moment estimates
+        self.v = None  # Second moment estimates
+        self.t = 0     # Timestep
+    
+    def initialize(self, layers):
+        """
+        Initialize moment estimates for each parameter
+        
+        Args:
+            layers: List of layers containing weights and biases
+        """
+        self.m = []
+        self.v = []
+        for layer in layers:
+            m_layer = {}
+            v_layer = {}
+            for param_name, param in layer.items():
+                if isinstance(param, np.ndarray):
+                    m_layer[param_name] = np.zeros_like(param)
+                    v_layer[param_name] = np.zeros_like(param)
+            self.m.append(m_layer)
+            self.v.append(v_layer)
+    
+    def update(self, layers, grads):
+        """
+        Update parameters using Adam optimizer
+        
+        Args:
+            layers: List of layers containing weights and biases
+            grads: List of gradients for each parameter
+        """
+        if self.m is None:
+            self.initialize(layers)
+        
+        self.t += 1
+        
+        for i, (layer, grad) in enumerate(zip(layers, grads)):
+            for param_name, g in grad.items():
+                if isinstance(g, np.ndarray):
+                    self.m[i][param_name] = self.beta1 * self.m[i][param_name] + (1 - self.beta1) * g
+                    self.v[i][param_name] = self.beta2 * self.v[i][param_name] + (1 - self.beta2) * g**2
+                    
+                    # Bias correction
+                    m_corrected = self.m[i][param_name] / (1 - self.beta1**self.t)
+                    v_corrected = self.v[i][param_name] / (1 - self.beta2**self.t)
+                    
+                    # Update parameters
+                    layer[param_name] -= self.learning_rate * m_corrected / (np.sqrt(v_corrected) + self.epsilon)

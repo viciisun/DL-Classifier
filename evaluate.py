@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import (
-    confusion_matrix, 
     accuracy_score, 
     precision_score, 
     recall_score, 
     f1_score, 
+    confusion_matrix,
     classification_report
 )
 import time
@@ -22,10 +22,34 @@ class ModelEvaluator:
             log_dir (str): Directory to store evaluation logs
         """
         self.log_dir = log_dir
-        # Create timestamp directory for this evaluation
-        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.log_subdir = os.path.join(log_dir, self.timestamp)
+        
+        # Create base log directory if it doesn't exist
+        os.makedirs(log_dir, exist_ok=True)
+        
+        # Create date-based directory for regular training
+        if 'ablation' not in log_dir:
+            date = datetime.now().strftime("%Y%m%d")
+            
+            # Find the next sequence number
+            try:
+                existing_runs = [d for d in os.listdir(log_dir) if d.startswith(date) and '_' in d]
+                if existing_runs:
+                    last_seq = max([int(d.split('_')[1]) for d in existing_runs if d.split('_')[1].isdigit()])
+                    seq_num = f"{last_seq + 1:03d}"
+                else:
+                    seq_num = "001"
+            except Exception as e:
+                print(f"Warning: Error reading directory {log_dir}: {str(e)}")
+                seq_num = "001"
+                
+            self.log_subdir = os.path.join(log_dir, f"{date}_{seq_num}")
+        else:
+            # For ablation studies, use the provided directory
+            self.log_subdir = log_dir
+            
+        # Create the final log subdirectory
         os.makedirs(self.log_subdir, exist_ok=True)
+        print(f"Logs will be saved to: {self.log_subdir}")
         
     def evaluate(self, model, X_test, y_test, model_name="default", features=None, verbose=True):
         """
@@ -71,7 +95,7 @@ class ModelEvaluator:
             'f1_score': float(f1),
             'loss': float(loss),
             'inference_time': float(inference_time),
-            'timestamp': self.timestamp,
+            'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         }
         
         # Print evaluation results
@@ -171,11 +195,27 @@ class ModelEvaluator:
             for file in files:
                 if file.endswith('_metrics.json'):
                     try:
-                        with open(os.path.join(root, file), 'r') as f:
+                        metrics_path = os.path.join(root, file)
+                        with open(metrics_path, 'r') as f:
                             metrics = json.load(f)
-                            all_metrics.append(metrics)
-                    except:
-                        print(f"Error loading metrics from {os.path.join(root, file)}")
+                            
+                        # Try to get hyperparameters from summary file
+                        summary_path = os.path.join(root, file.replace('_metrics.json', '_summary.json'))
+                        if os.path.exists(summary_path):
+                            with open(summary_path, 'r') as f:
+                                summary = json.load(f)
+                                if 'configuration' in summary:
+                                    metrics['hyperparameters'] = summary['configuration']
+                                if 'preprocess_method' in summary:
+                                    metrics['preprocess_method'] = summary['preprocess_method']
+                                    
+                        # Get directory name (date_sequence)
+                        dir_name = os.path.basename(os.path.dirname(metrics_path))
+                        metrics['dir_name'] = dir_name
+                                    
+                        all_metrics.append(metrics)
+                    except Exception as e:
+                        print(f"Error loading metrics from {metrics_path}: {str(e)}")
         
         if not all_metrics:
             print("No metrics files found")
@@ -185,16 +225,43 @@ class ModelEvaluator:
         all_metrics.sort(key=lambda x: x.get('accuracy', 0), reverse=True)
         
         # Print comparison
-        print("Model Comparison:")
-        print(f"{'Model':<20} {'Features':<40} {'Accuracy':<10} {'Inference Time':<15}")
-        print('-' * 85)
+        print("\nModel Comparison:")
+        headers = ['Run', 'Accuracy', 'F1 Score', 'Preprocess', 'Activation', 'Optimizer', 'Dropout', 'LR', 'Batch', 'Hidden Sizes']
+        row_format = "{:<12} {:<10} {:<10} {:<11} {:<11} {:<10} {:<10} {:<10} {:<8} {:<20}"
+        
+        print(row_format.format(*headers))
+        print("-" * 120)
         
         for m in all_metrics:
-            features_str = ', '.join(m.get('features', [])) if m.get('features', []) else 'None'
-            if len(features_str) > 37:
-                features_str = features_str[:34] + '...'
-            print(f"{m.get('model_name', 'Unknown'):<20} {features_str:<40} {m.get('accuracy', 0):<10.4f} {m.get('inference_time', 0):<15.4f}s")
+            # Get hyperparameters
+            hp = m.get('hyperparameters', {})
+            features = set(m.get('features', []))
+            
+            # Get preprocessing method
+            preprocess = m.get('preprocess_method', 'standard').title()
+            
+            # Determine settings
+            is_gelu = 'GELU' in features
+            is_adam = 'Adam' in features
+            
+            hidden_sizes = str(hp.get('hidden_sizes', 'N/A'))
+            if len(hidden_sizes) > 17:
+                hidden_sizes = hidden_sizes[:14] + '...'
+                
+            print(row_format.format(
+                m.get('dir_name', 'Unknown'),
+                f"{m.get('accuracy', 0):.4f}",
+                f"{m.get('f1_score', 0):.4f}",
+                preprocess,
+                'GELU' if is_gelu else 'ReLU',
+                'Adam' if is_adam else 'SGD',
+                str(hp.get('dropout', 'N/A')),
+                str(hp.get('lr', 'N/A')),
+                str(hp.get('batch_size', 'N/A')),
+                hidden_sizes
+            ))
         
+        print("\nDetailed metrics saved in respective log directories")
         return all_metrics
 
 # For backward compatibility

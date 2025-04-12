@@ -19,12 +19,13 @@ A comprehensive implementation of a neural network classifier from scratch for C
 
 - GELU activation function
 - Adam optimizer
-- Learning rate scheduling (step, cosine, exponential)
 - Early stopping
-- Data preprocessing (standard scaling, min-max scaling, PCA)
+- Data preprocessing options:
+  - Standard scaling (zero mean, unit variance)
+  - Min-max scaling (range [0,1])
 - Comprehensive evaluation metrics (accuracy, precision, recall, F1-score)
 - Confusion matrix visualization
-- Logging and model comparison
+- Structured logging and model comparison
 
 ## Requirements
 
@@ -33,22 +34,24 @@ numpy
 matplotlib
 scikit-learn
 tqdm
+psutil
 ```
 
 Install dependencies with:
 
 ```bash
-pip install numpy matplotlib scikit-learn tqdm
+pip install numpy matplotlib scikit-learn tqdm psutil
 ```
 
 ## Project Structure
 
 - `main.py`: Main script to run the model
+- `cli.py`: Command line interface and argument parsing
 - `model.py`: Neural network implementation
 - `train.py`: Training functionality
 - `evaluate.py`: Evaluation metrics and visualization
 - `data_loader.py`: Data loading and initial preprocessing
-- `preprocess.py`: Advanced preprocessing techniques
+- `preprocess.py`: Data preprocessing (standard and min-max scaling)
 - `advanced_ops.py`: Advanced operations (GELU, Adam)
 - `visualize.py`: Visualization utilities
 - `run_ablation_studies.py`: Script to run multiple model configurations
@@ -58,10 +61,16 @@ pip install numpy matplotlib scikit-learn tqdm
 
 ### Basic Usage
 
-To run the default model (2-layer neural network with ReLU, batch normalization, dropout, and SGD with momentum):
+To run the model with standard scaling:
 
 ```bash
-python3 main.py
+python3 main.py --preprocess standard
+```
+
+To run the model with min-max scaling:
+
+```bash
+python3 main.py --preprocess minmax
 ```
 
 ### Using Advanced Features
@@ -69,49 +78,59 @@ python3 main.py
 To run the model with specific advanced features:
 
 ```bash
-python3 main.py preprocess GELU Adam
+# Standard scaling with GELU activation and Adam optimizer
+python3 main.py --preprocess standard --use_gelu --use_adam
+
+# Min-max scaling with GELU activation
+python3 main.py --preprocess minmax --use_gelu
 ```
 
-This will use the default model with preprocessing, GELU activation, and Adam optimizer.
+### Available Options
 
-### Running the Full Model
+Preprocessing:
 
-To run the model with all advanced features:
+- `--preprocess standard`: Use standard scaling (mean=0, std=1)
+- `--preprocess minmax`: Use min-max scaling (range [0,1])
 
-```bash
-python3 main.py full
-```
+Features:
 
-This includes preprocessing, GELU activation, Adam optimizer, learning rate scheduling, and early stopping.
+- `--use_gelu`: Use GELU activation instead of ReLU
+- `--use_adam`: Use Adam optimizer instead of SGD
 
 ### Customizing Hyperparameters
 
 ```bash
-python3 main.py full --hidden_sizes 512 256 128 --epochs 200 --batch_size 64 --lr 0.0005
+python3 main.py --preprocess standard --use_gelu --use_adam \
+                --hidden_sizes 512 256 128 \
+                --epochs 200 \
+                --batch_size 64 \
+                --lr 0.0005
 ```
 
 ### Available Command Line Arguments
 
-- `features`: List of features to use (preprocess, GELU, Adam, lr_scheduler, early_stopping, or full)
+Model Architecture:
+
 - `--hidden_sizes`: List of hidden layer sizes (default: [256, 128])
+
+Training Parameters:
+
 - `--epochs`: Number of training epochs (default: 100)
 - `--batch_size`: Mini-batch size (default: 128)
 - `--lr`: Learning rate (default: 0.001)
 - `--momentum`: Momentum coefficient for SGD (default: 0.9)
 - `--weight_decay`: Weight decay coefficient (default: 1e-4)
 - `--dropout`: Dropout probability (default: 0.5)
-- `--patience`: Patience for early stopping (default: 10)
-- `--preprocess_method`: Preprocessing method (standard, minmax, pca) (default: standard)
-- `--pca_components`: Number of PCA components (default: None)
-- `--scheduler_type`: Learning rate scheduler type (step, cosine, exponential) (default: cosine)
+- `--early_stopping_patience`: Number of epochs to wait before early stopping (default: 10)
+
+Output Options:
+
 - `--log_dir`: Directory to save logs (default: logs)
-- `--verbose`: Print verbose output
+- `--model_name`: Custom model name (default: auto-generated based on features)
 
 ## Running Ablation Studies
 
-The project includes a script to automatically run multiple model configurations to analyze the impact of individual components. This helps in understanding which features contribute most to model performance.
-
-### To run ablation studies:
+The project includes a script to automatically run multiple model configurations to analyze the impact of individual components:
 
 ```bash
 python3 run_ablation_studies.py
@@ -119,74 +138,61 @@ python3 run_ablation_studies.py
 
 This script will:
 
-1. Create a timestamped directory in the logs folder (e.g., logs/ablation_20230501_123456)
-2. Run 15 different experiments with various configurations:
-   - Baseline model (default features)
-   - Models with individual features (GELU, Adam, preprocessing)
-   - Models with different preprocessing methods
-   - Models with combinations of features
-   - Models with different architectures
-   - Models with different learning rates
-   - Full model with all features
-3. Save all results in the same directory for easy comparison
+1. Create a timestamped directory in the logs folder (e.g., logs/ablation_20250412)
+2. Run experiments with various configurations:
+   - Baseline model with standard scaling
+   - Baseline model with min-max scaling
+   - Individual feature tests (GELU, Adam)
+   - Feature combinations
+   - Architecture variations
+   - Learning rate variations
+   - Dropout variations
+3. Save results in separate subdirectories for each experiment
+4. Generate a comprehensive summary of all experiments
 
-The complete process may take significant time as it's training multiple models sequentially.
+Each experiment has a timeout of 30 minutes to prevent hanging. Failed experiments are logged and reported in the summary.
 
-### To compare all models after ablation studies:
+### Viewing Ablation Results
 
-```bash
-python3 -c "from evaluate import ModelEvaluator; ModelEvaluator.compare_models('logs/ablation_YOUR_TIMESTAMP')"
-```
-
-Replace `YOUR_TIMESTAMP` with the timestamp from your ablation study run.
-
-## Example Commands for Individual Ablation Studies
-
-### Baseline Model
+After running the ablation studies:
 
 ```bash
-python3 main.py
+python3 -c "from evaluate import ModelEvaluator; ModelEvaluator.compare_models('logs/ablation_YYYYMMDD')"
 ```
 
-### Effect of GELU Activation
+This will show a comparison table with:
 
-```bash
-python3 main.py GELU
+- Model name and features
+- Preprocessing method used
+- Accuracy and F1 score
+- Hyperparameters (dropout, learning rate, batch size, architecture)
+- Training configuration
+
+## Log Structure
+
+Logs are organized as follows:
+
+```
+logs/
+  ├── YYYYMMDD_001/           # Regular training runs
+  │   ├── system_info.json
+  │   ├── model_metrics.json
+  │   ├── model_history.json
+  │   ├── preprocess_info.json
+  │   └── confusion_matrix.png
+  │
+  └── ablation_YYYYMMDD/      # Ablation studies
+      ├── standard_baseline/
+      ├── minmax_baseline/
+      ├── standard_gelu/
+      ├── minmax_adam/
+      └── ...
 ```
 
-### Effect of Adam Optimizer
-
-```bash
-python3 main.py Adam
-```
-
-### Effect of Preprocessing
-
-```bash
-python3 main.py preprocess --preprocess_method standard
-python3 main.py preprocess --preprocess_method minmax
-python3 main.py preprocess --preprocess_method pca --pca_components 64
-```
-
-### Combined Effects
-
-```bash
-python3 main.py GELU Adam
-python3 main.py GELU preprocess
-python3 main.py Adam preprocess
-```
-
-## Viewing Results
-
-After running the model, you can find the logs and results in the `logs` directory. Each run creates a timestamped subdirectory containing:
-
-- Training history
-- Evaluation metrics
-- Confusion matrix visualization
-- Model summary
+Each experiment directory contains complete metrics, history, and visualizations.
 
 ## Hardware and Software Requirements
 
 - Python 3.6+
-- NumPy, Matplotlib, scikit-learn, tqdm
+- NumPy, Matplotlib, scikit-learn, tqdm, psutil
 - Recommended: CPU with 4+ cores, 8GB+ RAM

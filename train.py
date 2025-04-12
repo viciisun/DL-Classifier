@@ -4,11 +4,11 @@ import os
 import json
 import time
 from datetime import datetime
-from advanced_ops import AdamOptimizer, LRScheduler
+from model import AdamOptimizer
 
 def train_model(model, X_train, y_train, X_val, y_val, epochs=100, batch_size=128, 
                 lr=0.001, momentum=0.9, weight_decay=1e-4, optimizer='sgd',
-                lr_scheduler=None, early_stopping=True, patience=10,
+                early_stopping=True, patience=10,
                 save_dir='logs', model_name="default", features=None):
     """
     Train the neural network model
@@ -25,7 +25,6 @@ def train_model(model, X_train, y_train, X_val, y_val, epochs=100, batch_size=12
         momentum: Momentum coefficient for SGD
         weight_decay: Weight decay (L2 regularization) coefficient
         optimizer: Optimizer type ('sgd' or 'adam')
-        lr_scheduler: Learning rate scheduler (None, 'step', 'cosine', 'exponential')
         early_stopping: Whether to use early stopping
         patience: Number of epochs to wait for improvement before stopping
         save_dir: Directory to save training logs
@@ -44,32 +43,20 @@ def train_model(model, X_train, y_train, X_val, y_val, epochs=100, batch_size=12
     val_losses = []
     val_accs = []
     
-    # Create timestamp subdirectory for logs
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    log_subdir = os.path.join(save_dir, timestamp)
-    os.makedirs(log_subdir, exist_ok=True)
-    
     # Initialize optimizer
     if optimizer == 'adam':
         adam = AdamOptimizer(learning_rate=lr)
     
-    # Initialize learning rate scheduler (optional)
-    if lr_scheduler:
-        scheduler = LRScheduler(initial_lr=lr, scheduler_type=lr_scheduler)
-    
     # Training start time
     start_time = time.time()
+    
+    print("\nStarting training:")
+    print("-" * 50)
         
     for epoch in range(epochs):
         epoch_start_time = time.time()
         epoch_loss = 0.0
         
-        # Update learning rate if scheduler is used
-        if lr_scheduler:
-            current_lr = scheduler.step(epoch)
-        else:
-            current_lr = lr
-            
         # Shuffle training data
         indices = np.random.permutation(n)
         X_train_shuffled = X_train[indices]
@@ -91,11 +78,11 @@ def train_model(model, X_train, y_train, X_val, y_val, epochs=100, batch_size=12
                 
                 # Update parameters
                 if optimizer == 'sgd':
-                    model.update(grads, current_lr, momentum, weight_decay)
+                    model.update(grads, lr, momentum, weight_decay)
                 elif optimizer == 'adam':
                     adam.update(model.layers, grads)
                 
-                pbar.set_postfix(loss=loss, lr=current_lr)
+                pbar.set_postfix(loss=loss, lr=lr)
                 pbar.update(1)
         
         # Track training loss
@@ -114,7 +101,7 @@ def train_model(model, X_train, y_train, X_val, y_val, epochs=100, batch_size=12
         # Calculate epoch runtime
         epoch_time = time.time() - epoch_start_time
         
-        print(f"Epoch {epoch+1}, Train Loss: {epoch_loss:.4f}, Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}, LR: {current_lr:.6f}, Time: {epoch_time:.2f}s")
+        print(f"Epoch {epoch+1}: Train Loss={epoch_loss:.4f}, Val Loss={val_loss:.4f}, Val Acc={val_acc:.4f}, LR={lr:.6f}, Time={epoch_time:.2f}s")
         
         # Save best model
         if val_acc > best_val_acc:
@@ -127,7 +114,7 @@ def train_model(model, X_train, y_train, X_val, y_val, epochs=100, batch_size=12
             
         # Early stopping
         if early_stopping and patience_counter >= patience:
-            print(f"Early stopping at epoch {epoch+1}. Best validation accuracy: {best_val_acc:.4f} at epoch {best_epoch}")
+            print(f"\nEarly stopping at epoch {epoch+1}. Best validation accuracy: {best_val_acc:.4f} at epoch {best_epoch}")
             break
     
     # Training end time and total training time
@@ -150,24 +137,26 @@ def train_model(model, X_train, y_train, X_val, y_val, epochs=100, batch_size=12
             'momentum': momentum,
             'weight_decay': weight_decay,
             'optimizer': optimizer,
-            'lr_scheduler': lr_scheduler,
+            'early_stopping': early_stopping,
+            'patience': patience
         },
         'runtime_info': {
             'total_training_time': float(total_training_time),
             'avg_epoch_time': float(total_training_time) / (epoch + 1),
-            'timestamp': timestamp
+            'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
     }
     
     # Save history to JSON file
-    history_file = os.path.join(log_subdir, f"{model_name}_history.json")
+    history_file = os.path.join(save_dir, f"{model_name}_history.json")
     with open(history_file, 'w') as f:
         json.dump(history, f, indent=4)
     
-    print(f"\nTraining Summary:")
+    print("\nTraining Summary:")
+    print("-" * 50)
     print(f"Total training time: {total_training_time:.2f} seconds")
     print(f"Average time per epoch: {total_training_time / (epoch + 1):.2f} seconds")
     print(f"Best validation accuracy: {best_val_acc:.4f} at epoch {best_epoch}")
     print(f"Training history saved to {history_file}")
     
-    return best_model_params, log_subdir
+    return best_model_params, save_dir

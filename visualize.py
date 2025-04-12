@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
 import os
 import json
@@ -18,10 +17,25 @@ def plot_confusion_matrix(cm, class_names=None, save_path=None):
         class_names = [str(i) for i in range(cm.shape[0])]
         
     plt.figure(figsize=(10, 8))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=class_names, yticklabels=class_names)
+    plt.imshow(cm, cmap='Blues')
+    plt.colorbar()
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Confusion Matrix')
+    
+    tick_marks = np.arange(len(class_names))
+    plt.xticks(tick_marks, class_names, rotation=45)
+    plt.yticks(tick_marks, class_names)
+    
+    fmt = '.2f'
+    thresh = cm.max() / 2.
+    for i, j in np.ndindex(cm.shape):
+        plt.text(j, i, format(cm[i, j], fmt),
+                 horizontalalignment="center",
+                 color="white" if cm[i, j] > thresh else "black")
+    
+    plt.tight_layout()
+    plt.ylim(len(cm) - 0.5, -0.5)
     
     if save_path:
         plt.savefig(save_path)
