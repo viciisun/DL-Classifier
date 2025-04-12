@@ -1,21 +1,33 @@
 import numpy as np
+from advanced_ops import gelu, gelu_grad
 
 class NeuralNetwork:
     def __init__(self, input_size=128, hidden_sizes=[256, 128], output_size=10, 
-                 use_bn=True, dropout_prob=0.5):
-        """初始化神经网络"""
+                 use_bn=True, dropout_prob=0.5, activation='relu'):
+        """
+        Initialize the neural network
+        
+        Args:
+            input_size (int): Input feature dimension
+            hidden_sizes (list): List of hidden layer sizes
+            output_size (int): Number of output classes
+            use_bn (bool): Whether to use batch normalization
+            dropout_prob (float): Dropout probability (0-1)
+            activation (str): Activation function ('relu' or 'gelu')
+        """
         self.layers = []
         sizes = [input_size] + hidden_sizes + [output_size]
         self.use_bn = use_bn
         self.dropout_prob = dropout_prob
+        self.activation = activation
 
-        # Xavier 初始化权重和偏置
+        # Xavier initialization for weights and biases
         for i in range(len(sizes) - 1):
             w = np.random.randn(sizes[i], sizes[i+1]) * np.sqrt(2.0 / sizes[i])
             b = np.zeros((1, sizes[i+1]))
             self.layers.append({'W': w, 'b': b})
         
-        # 批量归一化参数
+        # Batch normalization parameters
         if use_bn:
             for i in range(len(hidden_sizes)):
                 self.layers[i]['gamma'] = np.ones((1, sizes[i+1]))
@@ -23,7 +35,7 @@ class NeuralNetwork:
                 self.layers[i]['running_mean'] = np.zeros((1, sizes[i+1]))
                 self.layers[i]['running_var'] = np.ones((1, sizes[i+1]))
 
-        # 动量 SGD 的速度
+        # Momentum SGD velocities
         self.velocities = [{'W': np.zeros_like(l['W']), 'b': np.zeros_like(l['b'])} 
                           for l in self.layers]
         if use_bn:
@@ -31,21 +43,69 @@ class NeuralNetwork:
                 self.velocities[i]['gamma'] = np.zeros_like(self.layers[i]['gamma'])
                 self.velocities[i]['beta'] = np.zeros_like(self.layers[i]['beta'])
 
+    def activate(self, x):
+        """
+        Apply activation function
+        
+        Args:
+            x: Input tensor
+            
+        Returns:
+            Activated tensor
+        """
+        if self.activation == 'relu':
+            return self.relu(x)
+        elif self.activation == 'gelu':
+            return gelu(x)
+        else:
+            raise ValueError(f"Unsupported activation function: {self.activation}")
+
+    def activate_grad(self, x):
+        """
+        Calculate gradient of activation function
+        
+        Args:
+            x: Input tensor
+            
+        Returns:
+            Gradient of activation function
+        """
+        if self.activation == 'relu':
+            return self.relu_grad(x)
+        elif self.activation == 'gelu':
+            return gelu_grad(x)
+        else:
+            raise ValueError(f"Unsupported activation function: {self.activation}")
+
     def relu(self, x):
-        """ReLU 激活函数"""
+        """ReLU activation function"""
         return np.maximum(0, x)
 
     def relu_grad(self, x):
-        """ReLU 的梯度"""
+        """ReLU gradient"""
         return (x > 0).astype(float)
 
     def softmax(self, x):
-        """Softmax 函数"""
+        """Softmax function"""
         exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))
         return exp_x / np.sum(exp_x, axis=1, keepdims=True)
 
     def batch_norm_forward(self, x, gamma, beta, running_mean, running_var, training, momentum=0.9):
-        """批量归一化前向传播"""
+        """
+        Batch normalization forward pass
+        
+        Args:
+            x: Input tensor
+            gamma: Scale parameter
+            beta: Shift parameter
+            running_mean: Running mean for inference
+            running_var: Running variance for inference
+            training: Whether in training mode
+            momentum: Momentum for running statistics
+            
+        Returns:
+            Normalized tensor and cache for backprop
+        """
         if training:
             mu = np.mean(x, axis=0, keepdims=True)
             var = np.var(x, axis=0, keepdims=True)
@@ -57,10 +117,19 @@ class NeuralNetwork:
         else:
             x_hat = (x - running_mean) / np.sqrt(running_var + 1e-8)
             out = gamma * x_hat + beta
-            return out, x_hat, None, None  # 测试模式下返回 None
+            return out, x_hat, None, None  # None for test mode
 
     def forward(self, X, training=True):
-        """前向传播"""
+        """
+        Forward pass through the network
+        
+        Args:
+            X: Input features
+            training: Whether in training mode
+            
+        Returns:
+            Output probabilities
+        """
         self.cache = []
         h = X
 
@@ -73,10 +142,12 @@ class NeuralNetwork:
                 if training:
                     self.cache.append({'z': z, 'x_hat': x_hat, 'mu': mu, 'var': var, 'h': h})
                 else:
-                    self.cache.append({'z': z, 'x_hat': x_hat, 'h': h})  # 测试模式下不保存 mu 和 var
+                    self.cache.append({'z': z, 'x_hat': x_hat, 'h': h})
             else:
                 self.cache.append({'z': z, 'h': h})
-            h = self.relu(z)
+            
+            h = self.activate(z)
+            
             if training and self.dropout_prob > 0:
                 mask = (np.random.rand(*h.shape) > self.dropout_prob) / (1 - self.dropout_prob)
                 h *= mask
@@ -88,13 +159,31 @@ class NeuralNetwork:
         return probs
 
     def compute_loss(self, probs, y):
-        """计算交叉熵损失"""
+        """
+        Compute cross-entropy loss
+        
+        Args:
+            probs: Predicted probabilities
+            y: True labels (one-hot encoded)
+            
+        Returns:
+            Cross-entropy loss
+        """
         n = y.shape[0]
         log_probs = -np.log(probs[range(n), y.argmax(axis=1)] + 1e-8)
         return np.sum(log_probs) / n
 
     def backward(self, X, y):
-        """反向传播"""
+        """
+        Backward pass through the network
+        
+        Args:
+            X: Input features
+            y: True labels
+            
+        Returns:
+            Gradients for each parameter
+        """
         n = X.shape[0]
         grads = [{} for _ in self.layers]
         probs = self.cache[-1]['probs']
@@ -104,7 +193,7 @@ class NeuralNetwork:
         grads[-1]['b'] = np.sum(dz, axis=0, keepdims=True) / n
 
         for i in range(len(self.layers) - 2, -1, -1):
-            dz = dh * self.relu_grad(self.cache[i]['z'])
+            dz = dh * self.activate_grad(self.cache[i]['z'])
             if self.use_bn:
                 x_hat, mu, var = self.cache[i]['x_hat'], self.cache[i]['mu'], self.cache[i]['var']
                 gamma = self.layers[i]['gamma']
@@ -126,7 +215,15 @@ class NeuralNetwork:
         return grads
 
     def update(self, grads, lr, momentum, weight_decay):
-        """更新参数"""
+        """
+        Update parameters using SGD with momentum
+        
+        Args:
+            grads: Gradients for each parameter
+            lr: Learning rate
+            momentum: Momentum coefficient
+            weight_decay: Weight decay (L2 regularization) coefficient
+        """
         for i, layer in enumerate(self.layers):
             grads[i]['W'] += weight_decay * layer['W']
             self.velocities[i]['W'] = momentum * self.velocities[i]['W'] - lr * grads[i]['W']
