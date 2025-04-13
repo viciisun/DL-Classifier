@@ -1,0 +1,79 @@
+=== MODEL COMPARISON SUMMARY ===
+
+Total models evaluated: 29
+
+TOP 5 PERFORMING MODELS:
+
+1. Adam_GELU_standard
+   Accuracy: 0.5771
+   F1 Score: 0.5756
+   Configuration:
+     - features: ['GELU', 'Adam']
+     - precision: 0.5820916568230728
+     - recall: 0.5771
+     - loss: 1.2020698548978388
+     - inference_time: 0.3606739044189453
+     - timestamp: 2025-04-13 14:38:43
+     - hyperparameters: {'preprocess': 'standard', 'compare_models': False, 'gelu': True, 'adam': True, 'no_batch_norm': True, 'hidden_sizes': [512, 256], 'epochs': 1000, 'batch_size': 128, 'lr': 0.0005, 'momentum': 0.9, 'weight_decay': 0.0001, 'dropout': 0.5, 'early_stopping_patience': 10, 'log_dir': 'dropout01/hyperparams', 'model_name': None, 'features': ['GELU', 'Adam'], 'preprocess_method': 'standard', 'use_bn': False}
+     - preprocess_method: standard
+     - dir_name: 20250413_024
+
+2. Adam_GELU_standard
+   Accuracy: 0.5757
+   F1 Score: 0.5740
+   Configuration:
+     - features: ['GELU', 'Adam']
+     - precision: 0.5825839968815805
+     - recall: 0.5757
+     - loss: 1.2029554317039264
+     - inference_time: 0.3765830993652344
+     - timestamp: 2025-04-13 13:35:44
+     - hyperparameters: {'preprocess': 'standard', 'compare_models': False, 'gelu': True, 'adam': True, 'no_batch_norm': True, 'hidden_sizes': [512, 256], 'epochs': 1000, 'batch_size': 128, 'lr': 0.0005, 'momentum': 0.9, 'weight_decay': 0.0001, 'dropout': 0.5, 'early_stopping_patience': 10, 'log_dir': 'dropout01/hyperparams', 'model_name': None, 'features': ['GELU', 'Adam'], 'preprocess_method': 'standard', 'use_bn': False}
+     - preprocess_method: standard
+     - dir_name: 20250413_015
+
+3. Adam_GELU_standard
+   Accuracy: 0.5715
+   F1 Score: 0.5697
+   Configuration:
+     - features: ['GELU', 'Adam']
+     - precision: 0.5758967286439374
+     - recall: 0.5715
+     - loss: 1.2079073078382498
+     - inference_time: 0.5194501876831055
+     - timestamp: 2025-04-13 13:48:00
+     - hyperparameters: {'preprocess': 'standard', 'compare_models': False, 'gelu': True, 'adam': True, 'no_batch_norm': True, 'hidden_sizes': [512, 256], 'epochs': 1000, 'batch_size': 128, 'lr': 0.0005, 'momentum': 0.9, 'weight_decay': 0.0001, 'dropout': 0.5, 'early_stopping_patience': 10, 'log_dir': 'dropout01/hyperparams', 'model_name': None, 'features': ['GELU', 'Adam'], 'preprocess_method': 'standard', 'use_bn': False}
+     - preprocess_method: standard
+     - dir_name: 20250413_016
+
+4. Adam_GELU_standard
+   Accuracy: 0.5712
+   F1 Score: 0.5716
+   Configuration:
+     - features: ['GELU', 'Adam']
+     - precision: 0.5791307415177728
+     - recall: 0.5712
+     - loss: 1.2054824427428277
+     - inference_time: 0.28835201263427734
+     - timestamp: 2025-04-13 15:03:10
+     - hyperparameters: {'preprocess': 'standard', 'compare_models': False, 'gelu': True, 'adam': True, 'no_batch_norm': True, 'hidden_sizes': [512, 256], 'epochs': 1000, 'batch_size': 128, 'lr': 0.0005, 'momentum': 0.9, 'weight_decay': 0.0001, 'dropout': 0.5, 'early_stopping_patience': 10, 'log_dir': 'dropout01/hyperparams', 'model_name': None, 'features': ['GELU', 'Adam'], 'preprocess_method': 'standard', 'use_bn': False}
+     - preprocess_method: standard
+     - dir_name: 20250413_028
+
+5. Adam_GELU_standard
+   Accuracy: 0.5671
+   F1 Score: 0.5673
+   Configuration:
+     - features: ['GELU', 'Adam']
+     - precision: 0.574536963369112
+     - recall: 0.5671
+     - loss: 1.2035336935383023
+     - inference_time: 0.2781550884246826
+     - timestamp: 2025-04-13 15:08:35
+     - hyperparameters: {'preprocess': 'standard', 'compare_models': False, 'gelu': True, 'adam': True, 'no_batch_norm': True, 'hidden_sizes': [512, 256], 'epochs': 1000, 'batch_size': 128, 'lr': 0.0005, 'momentum': 0.9, 'weight_decay': 0.0001, 'dropout': 0.5, 'early_stopping_patience': 10, 'log_dir': 'dropout01/hyperparams', 'model_name': None, 'features': ['GELU', 'Adam'], 'preprocess_method': 'standard', 'use_bn': False}
+     - preprocess_method: standard
+     - dir_name: 20250413_029
+
+=== OBSERVATIONS ===
+The report shows performance variations across different model configurations.
+See the generated charts for visual comparison of results.

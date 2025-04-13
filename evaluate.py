@@ -226,11 +226,11 @@ class ModelEvaluator:
         
         # Print comparison
         print("\nModel Comparison:")
-        headers = ['Run', 'Accuracy', 'F1 Score', 'Preprocess', 'Activation', 'Optimizer', 'Dropout', 'LR', 'Batch', 'Hidden Sizes']
-        row_format = "{:<12} {:<10} {:<10} {:<11} {:<11} {:<10} {:<10} {:<10} {:<8} {:<20}"
+        headers = ['Run', 'Accuracy', 'F1 Score', 'Preprocess', 'Activation', 'Optimizer', 'Dropout', 'LR', 'Batch', 'Weight Decay', 'Hidden Sizes']
+        row_format = "{:<12} {:<10} {:<10} {:<11} {:<11} {:<10} {:<10} {:<10} {:<8} {:<12} {:<20}"
         
         print(row_format.format(*headers))
-        print("-" * 120)
+        print("-" * 140)
         
         for m in all_metrics:
             # Get hyperparameters
@@ -258,6 +258,7 @@ class ModelEvaluator:
                 str(hp.get('dropout', 'N/A')),
                 str(hp.get('lr', 'N/A')),
                 str(hp.get('batch_size', 'N/A')),
+                str(hp.get('weight_decay', 'N/A')),
                 hidden_sizes
             ))
         

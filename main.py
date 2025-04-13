@@ -141,7 +141,7 @@ def main():
         input_size=X_train.shape[1],
         hidden_sizes=args.hidden_sizes,
         output_size=10,
-        use_bn=True,
+        use_bn=args.use_bn,
         dropout_prob=args.dropout,
         activation=activation
     )

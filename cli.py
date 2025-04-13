@@ -40,6 +40,7 @@ Available Options:
   Features:
     --gelu  : Use GELU activation instead of ReLU
     --adam  : Use Adam optimizer instead of SGD
+    --no_batch_norm : Disable batch normalization
         """)
     
     # Preprocessing method
@@ -56,6 +57,8 @@ Available Options:
                            help='Use GELU activation instead of ReLU')
     feature_group.add_argument('--adam', action='store_true',
                            help='Use Adam optimizer instead of SGD')
+    feature_group.add_argument('--no_batch_norm', action='store_true',
+                           help='Disable batch normalization')
     
     # Model architecture
     model_group = parser.add_argument_group('Model Architecture')
@@ -116,9 +119,14 @@ Available Options:
         args.features.append('GELU')
     if args.adam:
         args.features.append('Adam')
+    if not args.no_batch_norm:
+        args.features.append('BatchNorm')
     
     # Store preprocess_method for compatibility
     args.preprocess_method = args.preprocess
+    
+    # Store use_bn flag
+    args.use_bn = not args.no_batch_norm
     
     return args
 
