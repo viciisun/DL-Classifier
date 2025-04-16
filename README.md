@@ -8,7 +8,7 @@ A comprehensive implementation of a neural network classifier from scratch for C
 
 - Multi-layer neural network with customizable architecture
 - ReLU activation functions
-- Weight decay (L2 regularization)
+- Weight decay
 - SGD with momentum
 - Dropout regularization
 - Softmax activation and cross-entropy loss
@@ -53,28 +53,8 @@ pip install numpy matplotlib scikit-learn tqdm psutil
 - `data_loader.py`: Data loading and initial preprocessing
 - `preprocess.py`: Data preprocessing (standard and min-max scaling)
 - `visualize.py`: Visualization utilities
-- `Analysis.md`: Detailed explanation of all model components
 
-## Dataset
-
-The project uses MNIST dataset in NumPy format:
-
-- `data/train_data.npy`: Training data features
-- `data/train_label.npy`: Training data labels
-- `data/test_data.npy`: Test data features
-- `data/test_label.npy`: Test data labels
-
-## Model Implementation
-
-The neural network classifier is implemented from scratch using NumPy, with the following key components:
-
-1. **Forward Propagation**: Computes predictions in a layer-by-layer fashion
-2. **Backpropagation**: Calculates gradients for all parameters using the chain rule
-3. **Optimizers**: Implements SGD with momentum and Adam optimizer
-4. **Regularization**: Includes dropout, batch normalization, and L2 regularization
-5. **Activation Functions**: Provides ReLU and GELU activation functions
-
-## Usage
+## Instruction
 
 ### Basic Usage
 
@@ -133,55 +113,77 @@ Output Options:
 - `--log_dir`: Directory to save logs (default: logs)
 - `--model_name`: Custom model name (default: auto-generated based on features)
 
-## Experimental Results
+### Running Automated Experiments
 
-The best model configuration achieves 97.82% accuracy on the test set with the following configuration:
+For systematic model evaluation, you can use the `run_experiment.py` script that automates ablation studies and hyperparameter analysis.
 
-- Preprocessing: Standard scaling
-- Activation: GELU
-- Optimizer: Adam
-- Hidden layers: [256, 128]
-- Dropout: 0.5
-- Batch Normalization: Enabled
+#### Ablation Studies
 
-For a detailed analysis of experiments and results, please refer to `Analysis.md`.
+Ablation studies systematically remove or replace model components to understand their impact:
 
-## Visualizations
+```bash
+# Run only ablation studies with 50 epochs per experiment
+python3 run_experiment.py --type ablation --epochs 50
 
-The model generates various visualizations during training and evaluation:
-
-1. **Training History**: Shows the training/validation loss and accuracy over epochs
-2. **Confusion Matrix**: Visualizes the model's predictions across different classes
-3. **Model Comparison**: Compares different model configurations on key metrics
-
-All visualizations are saved in the logs directory.
-
-## Log Structure
-
-Logs are organized as follows:
-
-```
-logs/
-  ├── YYYYMMDD_001/           # Regular training runs
-  │   ├── system_info.json
-  │   ├── model_metrics.json
-  │   ├── model_history.json
-  │   ├── preprocess_info.json
-  │   └── confusion_matrix.png
+# Run ablation studies with custom timeout (in minutes)
+python3 run_experiment.py --type ablation --timeout 60
 ```
 
-Each experiment directory contains complete metrics, history, and visualizations.
+#### Hyperparameter Analysis
 
-## Hardware and Software Requirements
+Explore different hyperparameter configurations:
 
-- Python 3.6+
-- NumPy, Matplotlib, scikit-learn, tqdm, psutil
-- Recommended: CPU with 4+ cores, 8GB+ RAM
+```bash
+# Run only hyperparameter analysis
+python3 run_experiment.py --type hyperparams
 
-## Authors
+# Specify base model configuration for hyperparameter analysis
+python3 run_experiment.py --type hyperparams --model_config "gelu,adam,batch_norm"
 
-- Your Name
+# Fix specific hyperparameters during analysis
+python3 run_experiment.py --type hyperparams --fixed_lr 0.001 --fixed_dropout 0.5
 
-## License
+# Skip specific hyperparameter groups in analysis
+python3 run_experiment.py --type hyperparams --skip_params "lr,dropout"
+```
 
-This project is available for academic and educational purposes.
+#### Combined Experiments
+
+Run both ablation studies and hyperparameter analysis:
+
+```bash
+# Run all experiments with custom log directory
+python3 run_experiment.py --type all --log_dir logs/my_experiments
+```
+
+#### Available Command Line Arguments for run_experiment.py
+
+- `--type`: Type of study to run (`ablation`, `hyperparams`, or `all`, default: `all`)
+- `--epochs`: Training epochs per experiment (default: 30)
+- `--timeout`: Timeout per experiment in minutes (default: 30)
+- `--log_dir`: Log directory (default: logs/study*{date}*{sequence})
+- `--model_config`: Model configuration for hyperparameter analysis (format: "activation,optimizer,normalization")
+- `--fixed_lr`: Fixed learning rate for hyperparameter analysis
+- `--fixed_bs`: Fixed batch size for hyperparameter analysis
+- `--fixed_wd`: Fixed weight decay for hyperparameter analysis
+- `--fixed_dropout`: Fixed dropout rate for hyperparameter analysis
+- `--fixed_hidden`: Fixed hidden layer sizes (format: "64 32" for two layers)
+- `--skip_params`: Parameters to skip in analysis (comma-separated: "lr,bs,wd,dropout,hidden")
+
+### To compare logs results
+
+```bash
+python3 compare_models.py logs/destination_folder
+```
+
+### Using Shell Scripts
+
+The repository also includes two shell scripts for running experiments:
+
+```bash
+# Run full ablation study (24 model configurations)
+bash run_ablation.sh
+
+# Run hyperparameter grid search
+bash run_hyperparams.sh
+```

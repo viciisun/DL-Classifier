@@ -1,0 +1,46 @@
+{
+    "model_name": "Adam_GELU_standard",
+    "features": [
+        "GELU",
+        "Adam"
+    ],
+    "epochs": 5,
+    "best_epoch": 1,
+    "best_val_acc": 0.1361,
+    "training_time": 18.278831005096436,
+    "train_losses": [
+        2.285998740671169,
+        1.9132826455780108,
+        1.8551307354611815,
+        1.9276292739887761,
+        2.1563853229716425
+    ],
+    "val_losses": [
+        2.2563768103313575,
+        2.307894494103323,
+        2.3122184362675213,
+        2.3161868177986125,
+        2.315263125999413
+    ],
+    "val_accs": [
+        0.1361,
+        0.0989,
+        0.0751,
+        0.087,
+        0.1014
+    ],
+    "hyperparameters": {
+        "batch_size": 128,
+        "learning_rate": 0.001,
+        "momentum": 0.9,
+        "weight_decay": 0.0001,
+        "optimizer": "adam",
+        "early_stopping": true,
+        "patience": 10
+    },
+    "runtime_info": {
+        "total_training_time": 18.278831005096436,
+        "avg_epoch_time": 3.6557662010192873,
+        "timestamp": "2025-04-12 18:15:24"
+    }
+}

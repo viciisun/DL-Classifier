@@ -1,0 +1,65 @@
+{
+    "timestamp": "2025-04-12 19:41:15",
+    "experiments": [
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --epochs 100 --log_dir logs/study_20250412/ablation",
+            "status": "\u6210\u529f",
+            "runtime": 30.421764850616455,
+            "name": "baseline_standard_gelu_adam_bn"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --epochs 100 --log_dir logs/study_20250412/ablation --no_batch_norm",
+            "status": "\u6210\u529f",
+            "runtime": 136.10749006271362,
+            "name": "no_batch_norm"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --adam --epochs 100 --log_dir logs/study_20250412/ablation",
+            "status": "\u6210\u529f",
+            "runtime": 15.031205654144287,
+            "name": "relu_instead_of_gelu"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --epochs 100 --log_dir logs/study_20250412/ablation",
+            "status": "\u6210\u529f",
+            "runtime": 31.141480922698975,
+            "name": "sgd_instead_of_adam"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --dropout 0.0 --epochs 100 --log_dir logs/study_20250412/ablation",
+            "status": "\u6210\u529f",
+            "runtime": 108.3416531085968,
+            "name": "dropout_0.0"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --dropout 0.3 --epochs 100 --log_dir logs/study_20250412/ablation",
+            "status": "\u6210\u529f",
+            "runtime": 30.279617071151733,
+            "name": "dropout_0.3"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --dropout 0.7 --epochs 100 --log_dir logs/study_20250412/ablation",
+            "status": "\u6210\u529f",
+            "runtime": 43.9210422039032,
+            "name": "dropout_0.7"
+        },
+        {
+            "command": "python3 main.py --preprocess minmax --gelu --adam --epochs 100 --log_dir logs/study_20250412/ablation",
+            "status": "\u6210\u529f",
+            "runtime": 42.60230493545532,
+            "name": "minmax_scaling"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 512 256 --epochs 100 --log_dir logs/study_20250412/ablation",
+            "status": "\u6210\u529f",
+            "runtime": 66.39141774177551,
+            "name": "architecture_1"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 256 128 64 --epochs 100 --log_dir logs/study_20250412/ablation",
+            "status": "\u6210\u529f",
+            "runtime": 38.90097999572754,
+            "name": "architecture_2"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "model_name": "lr0.0005_drop0.3_wd0.0001_h256_128",
+    "features": [
+        "GELU",
+        "Adam"
+    ],
+    "accuracy": 0.551,
+    "precision": 0.5540358427683374,
+    "recall": 0.551,
+    "f1_score": 0.5494324982224739,
+    "loss": 1.2825797426918264,
+    "inference_time": 0.15442395210266113,
+    "timestamp": "2025-04-16 17:10:54"
+}

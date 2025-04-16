@@ -1,0 +1,13 @@
+{
+    "model_name": "Adam_minmax",
+    "features": [
+        "Adam"
+    ],
+    "accuracy": 0.5028,
+    "precision": 0.5006459547598743,
+    "recall": 0.5028,
+    "f1_score": 0.4962177299690251,
+    "loss": 1.4044625036336404,
+    "inference_time": 0.07835507392883301,
+    "timestamp": "2025-04-16 15:37:05"
+}

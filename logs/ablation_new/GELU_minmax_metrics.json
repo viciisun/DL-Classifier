@@ -1,0 +1,13 @@
+{
+    "model_name": "GELU_minmax",
+    "features": [
+        "GELU"
+    ],
+    "accuracy": 0.3504,
+    "precision": 0.33687963375682195,
+    "recall": 0.3504,
+    "f1_score": 0.3321524036800807,
+    "loss": 1.8888629040175677,
+    "inference_time": 0.434276819229126,
+    "timestamp": "2025-04-16 15:33:00"
+}

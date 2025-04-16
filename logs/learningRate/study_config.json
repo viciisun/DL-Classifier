@@ -1,0 +1,17 @@
+{
+    "timestamp": "2025-04-13 18:45:02",
+    "study_type": "hyperparams",
+    "epochs": 1000,
+    "timeout": 30,
+    "log_dir": "logs/learningRate",
+    "model_config": "gelu,adam,no_batch_norm",
+    "fixed_params": {
+        "bs": 128,
+        "wd": 0.0001,
+        "hidden": "512 256"
+    },
+    "skip_params": [],
+    "grid_search": false,
+    "top_configs": false,
+    "max_experiments": null
+}

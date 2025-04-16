@@ -1,0 +1,8 @@
+{
+    "timestamp": "2025-04-12 19:56:50",
+    "study_type": "hyperparams",
+    "epochs": 100,
+    "timeout": 30,
+    "log_dir": "logs/bestmodel",
+    "model_config": "gelu,adam,no_batch_norm"
+}

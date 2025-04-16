@@ -1,0 +1,13 @@
+{
+    "model_name": "BatchNorm_none",
+    "features": [
+        "BatchNorm"
+    ],
+    "accuracy": 0.1898,
+    "precision": 0.19816720822285944,
+    "recall": 0.1898,
+    "f1_score": 0.11510949708344365,
+    "loss": 2.2334457627279467,
+    "inference_time": 0.10860991477966309,
+    "timestamp": "2025-04-16 15:07:24"
+}

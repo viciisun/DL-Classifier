@@ -1,0 +1,96 @@
+{
+    "timestamp": "2025-04-13 19:42:44",
+    "model_config": "gelu,adam,no_batch_norm",
+    "fixed_params": {
+        "bs": 128,
+        "wd": 0.0001,
+        "hidden": "512 256"
+    },
+    "skip_params": [],
+    "experiments": [
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --batch_size 128 --weight_decay 0.0001 --hidden_sizes 512 256 --lr 0.0001 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 829.9668209552765,
+            "name": "bs_128_wd_0.0001_hidden_512 256_lr_0.0001",
+            "type": "single_param"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --batch_size 128 --weight_decay 0.0001 --hidden_sizes 512 256 --lr 0.0005 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 296.4361798763275,
+            "name": "bs_128_wd_0.0001_hidden_512 256_lr_0.0005",
+            "type": "single_param"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --batch_size 128 --weight_decay 0.0001 --hidden_sizes 512 256 --lr 0.001 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 222.70086669921875,
+            "name": "bs_128_wd_0.0001_hidden_512 256_lr_0.001",
+            "type": "single_param"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --batch_size 128 --weight_decay 0.0001 --hidden_sizes 512 256 --lr 0.005 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 119.5301239490509,
+            "name": "bs_128_wd_0.0001_hidden_512 256_lr_0.005",
+            "type": "single_param"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --batch_size 128 --weight_decay 0.0001 --hidden_sizes 512 256 --dropout 0.0 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 63.682656049728394,
+            "name": "bs_128_wd_0.0001_hidden_512 256_dropout_0.0",
+            "type": "single_param"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --batch_size 128 --weight_decay 0.0001 --hidden_sizes 512 256 --dropout 0.3 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 169.17070412635803,
+            "name": "bs_128_wd_0.0001_hidden_512 256_dropout_0.3",
+            "type": "single_param"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --batch_size 128 --weight_decay 0.0001 --hidden_sizes 512 256 --dropout 0.5 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 275.1023750305176,
+            "name": "bs_128_wd_0.0001_hidden_512 256_dropout_0.5",
+            "type": "single_param"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --batch_size 128 --weight_decay 0.0001 --hidden_sizes 512 256 --dropout 0.7 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 332.6303789615631,
+            "name": "bs_128_wd_0.0001_hidden_512 256_dropout_0.7",
+            "type": "single_param"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --batch_size 128 --dropout 0.5 --hidden_sizes 512 256 --weight_decay 0.0001 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 321.2321147918701,
+            "name": "top_config_1",
+            "type": "top_config"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --batch_size 128 --dropout 0.5 --hidden_sizes 512 256 --weight_decay 0.0001 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 307.49420285224915,
+            "name": "top_config_2",
+            "type": "top_config"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --batch_size 128 --dropout 0.3 --hidden_sizes 512 256 --weight_decay 0.0001 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 244.18747305870056,
+            "name": "top_config_3",
+            "type": "top_config"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --batch_size 128 --dropout 0.3 --hidden_sizes 512 256 --weight_decay 0.0001 --epochs 1000 --log_dir logs/learningRate/hyperparams",
+            "status": "Success",
+            "runtime": 280.57537317276,
+            "name": "top_config_4",
+            "type": "top_config"
+        }
+    ]
+}

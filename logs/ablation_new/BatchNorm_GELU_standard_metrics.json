@@ -1,0 +1,14 @@
+{
+    "model_name": "BatchNorm_GELU_standard",
+    "features": [
+        "GELU",
+        "BatchNorm"
+    ],
+    "accuracy": 0.2556,
+    "precision": 0.312440334138066,
+    "recall": 0.2556,
+    "f1_score": 0.21795556861290985,
+    "loss": 2.1119257542424466,
+    "inference_time": 0.29090309143066406,
+    "timestamp": "2025-04-16 14:24:40"
+}

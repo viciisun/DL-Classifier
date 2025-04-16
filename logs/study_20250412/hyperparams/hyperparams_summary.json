@@ -1,0 +1,113 @@
+{
+    "timestamp": "2025-04-12 19:29:00",
+    "experiments": [
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --lr 0.0001 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 39.1184720993042,
+            "name": "lr_0.0001"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --lr 0.0005 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 30.444002866744995,
+            "name": "lr_0.0005"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --lr 0.001 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 28.81462597846985,
+            "name": "lr_0.001"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --lr 0.005 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 28.61951994895935,
+            "name": "lr_0.005"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --lr 0.01 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 33.397623777389526,
+            "name": "lr_0.01"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --batch_size 32 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 41.948917865753174,
+            "name": "batch_size_32"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --batch_size 64 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 35.0808310508728,
+            "name": "batch_size_64"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --batch_size 128 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 30.974544763565063,
+            "name": "batch_size_128"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --batch_size 256 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 29.33143925666809,
+            "name": "batch_size_256"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --weight_decay 0 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 33.82554292678833,
+            "name": "weight_decay_0"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --weight_decay 1e-05 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 30.14635396003723,
+            "name": "weight_decay_1e-05"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --weight_decay 0.0001 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 28.66253113746643,
+            "name": "weight_decay_0.0001"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --weight_decay 0.001 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 30.779219150543213,
+            "name": "weight_decay_0.001"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 64 32 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 10.595444917678833,
+            "name": "hidden_size_1"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 128 64 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 17.23556113243103,
+            "name": "hidden_size_2"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 256 128 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 29.002824306488037,
+            "name": "hidden_size_3"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 512 256 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 60.51002287864685,
+            "name": "hidden_size_4"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 256 128 64 --epochs 50 --log_dir logs/study_20250412/hyperparams",
+            "status": "\u6210\u529f",
+            "runtime": 36.66655898094177,
+            "name": "hidden_size_5"
+        }
+    ]
+}

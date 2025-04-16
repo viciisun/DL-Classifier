@@ -1,0 +1,7 @@
+{
+    "timestamp": "2025-04-12 19:32:12",
+    "study_type": "ablation",
+    "epochs": 100,
+    "timeout": 30,
+    "log_dir": "logs/study_20250412"
+}

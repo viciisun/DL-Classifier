@@ -1,0 +1,12 @@
+{
+    "timestamp": "2025-04-13 00:09:56",
+    "study_type": "hyperparams",
+    "epochs": 100,
+    "timeout": 30,
+    "log_dir": "logs/best3",
+    "model_config": "gelu,adam,no_batch_norm",
+    "fixed_params": {
+        "lr": 0.0005
+    },
+    "skip_params": []
+}

@@ -1,0 +1,13 @@
+{
+    "timestamp": "2025-04-15 06:22:32",
+    "study_type": "all",
+    "epochs": 30,
+    "timeout": 30,
+    "log_dir": "logs/study_20250415_001",
+    "model_config": null,
+    "fixed_params": {},
+    "skip_params": [],
+    "grid_search": false,
+    "top_configs": false,
+    "max_experiments": null
+}

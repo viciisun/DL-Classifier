@@ -1,0 +1,15 @@
+{
+    "timestamp": "2025-04-13 12:40:55",
+    "study_type": "ablation",
+    "epochs": 1000,
+    "timeout": 30,
+    "log_dir": "logs/study_20250413_001",
+    "model_config": null,
+    "fixed_params": {
+        "lr": 0.0005
+    },
+    "skip_params": [],
+    "grid_search": false,
+    "top_configs": false,
+    "max_experiments": null
+}

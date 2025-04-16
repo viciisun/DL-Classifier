@@ -1,0 +1,11 @@
+{
+    "model_name": "minmax",
+    "features": [],
+    "accuracy": 0.3582,
+    "precision": 0.33946895571516,
+    "recall": 0.3582,
+    "f1_score": 0.3360490083545226,
+    "loss": 1.8153543306712192,
+    "inference_time": 0.07140111923217773,
+    "timestamp": "2025-04-16 15:41:33"
+}

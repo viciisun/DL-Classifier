@@ -1,0 +1,13 @@
+{
+    "model_name": "GELU_none",
+    "features": [
+        "GELU"
+    ],
+    "accuracy": 0.4106,
+    "precision": 0.4401658227713178,
+    "recall": 0.4106,
+    "f1_score": 0.39781463628149666,
+    "loss": 1.6344583564206085,
+    "inference_time": 0.3808150291442871,
+    "timestamp": "2025-04-16 15:00:51"
+}

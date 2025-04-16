@@ -1,6 +1,5 @@
 import numpy as np
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.decomposition import PCA
 
 class DataPreprocessor:
     def __init__(self, method='standard', n_components=None):
@@ -11,13 +10,9 @@ class DataPreprocessor:
             method (str): Preprocessing method to use
                 - 'standard': Standard scaling (zero mean, unit variance)
                 - 'minmax': Min-max scaling (0-1 range)
-                - 'pca': Principal Component Analysis
-            n_components (int): Number of components for PCA
         """
         self.method = method
-        self.n_components = n_components
         self.scaler = None
-        self.pca = None
         
     @property
     def mean_(self):
@@ -55,11 +50,6 @@ class DataPreprocessor:
         elif self.method == 'minmax':
             self.scaler = MinMaxScaler()
             self.scaler.fit(X)
-        elif self.method == 'pca':
-            if self.n_components is None:
-                self.n_components = min(X.shape[0], X.shape[1])
-            self.pca = PCA(n_components=self.n_components)
-            self.pca.fit(X)
             
     def transform(self, X):
         """Transform data using the fitted preprocessor"""
@@ -67,10 +57,6 @@ class DataPreprocessor:
             if self.scaler is None:
                 raise ValueError("Preprocessor must be fitted before transform")
             return self.scaler.transform(X)
-        elif self.method == 'pca':
-            if self.pca is None:
-                raise ValueError("Preprocessor must be fitted before transform")
-            return self.pca.transform(X)
         return X
         
     def fit_transform(self, X):
@@ -84,17 +70,7 @@ class DataPreprocessor:
             if self.scaler is None:
                 raise ValueError("Preprocessor must be fitted before inverse_transform")
             return self.scaler.inverse_transform(X)
-        elif self.method == 'pca':
-            if self.pca is None:
-                raise ValueError("Preprocessor must be fitted before inverse_transform")
-            return self.pca.inverse_transform(X)
         return X
-        
-    def get_explained_variance_ratio(self):
-        """Get explained variance ratio for PCA"""
-        if self.method == 'pca' and self.pca is not None:
-            return self.pca.explained_variance_ratio_
-        return None
         
     def get_params(self):
         """Get preprocessing parameters"""

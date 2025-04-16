@@ -1,0 +1,15 @@
+{
+    "timestamp": "2025-04-13 15:43:36",
+    "study_type": "hyperparams",
+    "epochs": 1000,
+    "timeout": 30,
+    "log_dir": "logs/t_drop_batch/",
+    "model_config": "gelu,adam,no_batch_norm",
+    "fixed_params": {
+        "lr": 0.0005
+    },
+    "skip_params": [],
+    "grid_search": false,
+    "top_configs": false,
+    "max_experiments": null
+}

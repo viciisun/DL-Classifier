@@ -1,0 +1,14 @@
+{
+    "model_name": "Adam_GELU_standard",
+    "features": [
+        "GELU",
+        "Adam"
+    ],
+    "accuracy": 0.5543,
+    "precision": 0.5562439875223029,
+    "recall": 0.5543,
+    "f1_score": 0.5518417868821476,
+    "loss": 1.2264055896267416,
+    "inference_time": 0.15894412994384766,
+    "timestamp": "2025-04-13 07:11:12"
+}

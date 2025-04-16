@@ -1,0 +1,44 @@
+{
+    "model_name": "lr0.0001_drop0.5_wd0.0001_h512_256",
+    "preprocess_method": "standard",
+    "features": [
+        "GELU",
+        "Adam"
+    ],
+    "configuration": {
+        "preprocess": "standard",
+        "compare_models": false,
+        "gelu": true,
+        "adam": true,
+        "no_batch_norm": true,
+        "hidden_sizes": [
+            512,
+            256
+        ],
+        "epochs": 100,
+        "batch_size": 256,
+        "lr": 0.0001,
+        "momentum": 0.9,
+        "weight_decay": 0.0001,
+        "dropout": 0.5,
+        "early_stopping_patience": 10,
+        "log_dir": "logs/hyperparams_new",
+        "model_name": "lr0.0001_drop0.5_wd0.0001_h512_256",
+        "features": [
+            "GELU",
+            "Adam"
+        ],
+        "preprocess_method": "standard",
+        "use_bn": false
+    },
+    "system_info": {
+        "os": "Darwin",
+        "os_version": "Darwin Kernel Version 23.6.0: Mon Jul 29 21:14:30 PDT 2024; root:xnu-10063.141.2~1/RELEASE_ARM64_T6030",
+        "python_version": "3.7.7",
+        "processor": "Apple M3 Pro",
+        "cpu_count": 11,
+        "memory": "18.0GB",
+        "timestamp": "2025-04-16 16:06:18"
+    },
+    "timestamp": "2025-04-16 16:06:18"
+}

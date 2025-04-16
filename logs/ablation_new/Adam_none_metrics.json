@@ -1,0 +1,13 @@
+{
+    "model_name": "Adam_none",
+    "features": [
+        "Adam"
+    ],
+    "accuracy": 0.5638,
+    "precision": 0.5665412444808149,
+    "recall": 0.5638,
+    "f1_score": 0.5621301043054953,
+    "loss": 1.2106308121628209,
+    "inference_time": 0.07497119903564453,
+    "timestamp": "2025-04-16 15:05:01"
+}

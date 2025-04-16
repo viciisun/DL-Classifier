@@ -112,6 +112,8 @@ def main():
     with open(os.path.join(log_dir, f'{model_name}_summary.json'), 'w') as f:
         json.dump(config, f, indent=4)
     
+    # Training Strats here
+
     # Load data
     print("\nLoading data...")
     X_train_full, y_train_onehot, X_test, y_test_onehot, y_test = load_and_preprocess_data()

@@ -1,0 +1,14 @@
+{
+    "model_name": "Adam_BatchNorm_standard",
+    "features": [
+        "Adam",
+        "BatchNorm"
+    ],
+    "accuracy": 0.1529,
+    "precision": 0.2060534799379013,
+    "recall": 0.1529,
+    "f1_score": 0.11629321718174844,
+    "loss": 2.267864178222102,
+    "inference_time": 0.07749605178833008,
+    "timestamp": "2025-04-16 14:33:02"
+}

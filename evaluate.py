@@ -265,7 +265,6 @@ class ModelEvaluator:
         print("\nDetailed metrics saved in respective log directories")
         return all_metrics
 
-# For backward compatibility
 def evaluate_model(model, X_test, y_test):
     """
     Legacy function for model evaluation

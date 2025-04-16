@@ -1,0 +1,79 @@
+=== MODEL COMPARISON SUMMARY ===
+
+Total models evaluated: 6
+
+TOP 5 PERFORMING MODELS:
+
+1. Adam_GELU_standard
+   Accuracy: 0.5709
+   F1 Score: 0.5691
+   Configuration:
+     - features: ['GELU', 'Adam']
+     - precision: 0.5743440608947654
+     - recall: 0.5709
+     - loss: 1.207642204767954
+     - inference_time: 0.41246986389160156
+     - timestamp: 2025-04-13 12:55:55
+     - hyperparameters: {'preprocess': 'standard', 'compare_models': False, 'gelu': True, 'adam': True, 'no_batch_norm': True, 'hidden_sizes': [512, 256], 'epochs': 1000, 'batch_size': 128, 'lr': 0.0005, 'momentum': 0.9, 'weight_decay': 0.0001, 'dropout': 0.5, 'early_stopping_patience': 10, 'log_dir': 'logs/study_20250413_001/ablation', 'model_name': None, 'features': ['GELU', 'Adam'], 'preprocess_method': 'standard', 'use_bn': False}
+     - preprocess_method: standard
+     - dir_name: ablation
+
+2. BatchNorm_standard
+   Accuracy: 0.4974
+   F1 Score: 0.4883
+   Configuration:
+     - features: ['BatchNorm']
+     - precision: 0.5065960482561868
+     - recall: 0.4974
+     - loss: 1.8021708099251366
+     - inference_time: 0.0550382137298584
+     - timestamp: 2025-04-13 13:10:53
+     - hyperparameters: {'preprocess': 'standard', 'compare_models': False, 'gelu': False, 'adam': False, 'no_batch_norm': False, 'hidden_sizes': [256], 'epochs': 1000, 'batch_size': 128, 'lr': 0.001, 'momentum': 0.9, 'weight_decay': 0.0, 'dropout': 0.0, 'early_stopping_patience': 10, 'log_dir': 'logs/study_20250413_001/ablation', 'model_name': None, 'features': ['BatchNorm'], 'preprocess_method': 'standard', 'use_bn': True}
+     - preprocess_method: standard
+     - dir_name: ablation
+
+3. Adam_BatchNorm_GELU_standard
+   Accuracy: 0.4703
+   F1 Score: 0.4531
+   Configuration:
+     - features: ['GELU', 'Adam', 'BatchNorm']
+     - precision: 0.47861309883291225
+     - recall: 0.4703
+     - loss: 1.5547618117558994
+     - inference_time: 0.40488481521606445
+     - timestamp: 2025-04-13 13:08:48
+     - hyperparameters: {'preprocess': 'standard', 'compare_models': False, 'gelu': True, 'adam': True, 'no_batch_norm': False, 'hidden_sizes': [512, 256], 'epochs': 1000, 'batch_size': 128, 'lr': 0.0005, 'momentum': 0.9, 'weight_decay': 0.0, 'dropout': 0.0, 'early_stopping_patience': 10, 'log_dir': 'logs/study_20250413_001/ablation', 'model_name': None, 'features': ['GELU', 'Adam', 'BatchNorm'], 'preprocess_method': 'standard', 'use_bn': True}
+     - preprocess_method: standard
+     - dir_name: ablation
+
+4. BatchNorm_GELU_standard
+   Accuracy: 0.2314
+   F1 Score: 0.1821
+   Configuration:
+     - features: ['GELU', 'BatchNorm']
+     - precision: 0.38346249778001795
+     - recall: 0.2314
+     - loss: 2.1365691311306785
+     - inference_time: 0.4106009006500244
+     - timestamp: 2025-04-13 12:46:26
+     - hyperparameters: {'preprocess': 'standard', 'compare_models': False, 'gelu': True, 'adam': False, 'no_batch_norm': False, 'hidden_sizes': [512, 256], 'epochs': 1000, 'batch_size': 128, 'lr': 0.0005, 'momentum': 0.9, 'weight_decay': 0.0001, 'dropout': 0.5, 'early_stopping_patience': 10, 'log_dir': 'logs/study_20250413_001/ablation', 'model_name': None, 'features': ['GELU', 'BatchNorm'], 'preprocess_method': 'standard', 'use_bn': True}
+     - preprocess_method: standard
+     - dir_name: ablation
+
+5. Adam_BatchNorm_standard
+   Accuracy: 0.1524
+   F1 Score: 0.1033
+   Configuration:
+     - features: ['Adam', 'BatchNorm']
+     - precision: 0.268831588941597
+     - recall: 0.1524
+     - loss: 2.258620316652893
+     - inference_time: 0.07257699966430664
+     - timestamp: 2025-04-13 12:42:17
+     - hyperparameters: {'preprocess': 'standard', 'compare_models': False, 'gelu': False, 'adam': True, 'no_batch_norm': False, 'hidden_sizes': [512, 256], 'epochs': 1000, 'batch_size': 128, 'lr': 0.0005, 'momentum': 0.9, 'weight_decay': 0.0001, 'dropout': 0.5, 'early_stopping_patience': 10, 'log_dir': 'logs/study_20250413_001/ablation', 'model_name': None, 'features': ['Adam', 'BatchNorm'], 'preprocess_method': 'standard', 'use_bn': True}
+     - preprocess_method: standard
+     - dir_name: ablation
+
+=== OBSERVATIONS ===
+The report shows performance variations across different model configurations.
+See the generated charts for visual comparison of results.

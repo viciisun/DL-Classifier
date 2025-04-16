@@ -1,0 +1,97 @@
+{
+    "timestamp": "2025-04-13 13:10:53",
+    "baseline": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 512 256 --lr 0.0005 --batch_size 128 --dropout 0.5 --weight_decay 0.0001 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+    "experiments": [
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 512 256 --lr 0.0005 --batch_size 128 --dropout 0.5 --weight_decay 0.0001 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Success",
+            "runtime": 57.83128499984741,
+            "name": "baseline_full_model",
+            "type": "baseline"  
+        },
+        {
+            "command": "python3 main.py --preprocess standard --adam --hidden_sizes 512 256 --lr 0.0005 --batch_size 128 --dropout 0.5 --weight_decay 0.0001 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Success",
+            "runtime": 24.80440616607666,
+            "name": "no_gelu_use_relu",
+            "type": "activation"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --hidden_sizes 512 256 --lr 0.0005 --batch_size 128 --dropout 0.5 --weight_decay 0.0001 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Success",
+            "runtime": 248.43621826171875,
+            "name": "no_adam_use_sgd",
+            "type": "optimizer"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 512 256 --lr 0.0005 --batch_size 128 --dropout 0.5 --weight_decay 0.0001 --epochs 1000 --log_dir logs/study_20250413_001/ablation --no_batch_norm",
+            "status": "Success",
+            "runtime": 569.8696639537811,
+            "name": "no_batch_norm",
+            "type": "normalization"
+        },
+        {
+            "command": "python3 main.py --preprocess minmax --gelu --adam --hidden_sizes 512 256 --lr 0.0005 --batch_size 128 --dropout 0.5 --weight_decay 0.0001 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Success",
+            "runtime": 83.07369899749756,
+            "name": "minmax_scaling",
+            "type": "preprocessing"
+        },
+        {
+            "command": "python3 main.py --preprocess robust --gelu --adam --hidden_sizes 512 256 --lr 0.0005 --batch_size 128 --dropout 0.5 --weight_decay 0.0001 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Failed (code 2)",
+            "runtime": 1.5255649089813232,
+            "name": "robust_scaling",
+            "type": "preprocessing"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 128 64 --lr 0.0005 --batch_size 128 --dropout 0.5 --weight_decay 0.0001 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Success",
+            "runtime": 26.28682231903076,
+            "name": "narrow_network",
+            "type": "architecture"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 256 --lr 0.0005 --batch_size 128 --dropout 0.5 --weight_decay 0.0001 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Success",
+            "runtime": 59.52271103858948,
+            "name": "shallow_network",
+            "type": "architecture"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 512 256 128 64 --lr 0.0005 --batch_size 128 --dropout 0.5 --weight_decay 0.0001 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Success",
+            "runtime": 119.77068901062012,
+            "name": "deep_network",
+            "type": "architecture"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 512 256 --lr 0.0005 --batch_size 128 --dropout 0.0 --weight_decay 0.0001 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Success",
+            "runtime": 221.32988905906677,
+            "name": "no_dropout",
+            "type": "regularization"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 512 256 --lr 0.0005 --batch_size 128 --dropout 0.5 --weight_decay 0 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Success",
+            "runtime": 69.29427194595337,
+            "name": "no_weight_decay",
+            "type": "regularization"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --hidden_sizes 512 256 --lr 0.0005 --batch_size 128 --dropout 0.0 --weight_decay 0 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Success",
+            "runtime": 191.48064994812012,
+            "name": "no_regularization",
+            "type": "combined"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --hidden_sizes 256 --lr 0.001 --batch_size 128 --dropout 0.0 --weight_decay 0 --epochs 1000 --log_dir logs/study_20250413_001/ablation",
+            "status": "Success",
+            "runtime": 125.20358324050903,
+            "name": "minimal_model",
+            "type": "combined"
+        }
+    ]
+}

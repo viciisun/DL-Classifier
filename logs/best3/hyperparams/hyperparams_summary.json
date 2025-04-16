@@ -1,0 +1,112 @@
+{
+    "timestamp": "2025-04-13 01:06:18",
+    "model_config": "gelu,adam,no_batch_norm",
+    "fixed_params": {
+        "lr": 0.0005
+    },
+    "skip_params": [],
+    "experiments": [
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --batch_size 32 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 223.3184037208557,
+            "name": "batch_size_32"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --batch_size 64 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 182.4702591896057,
+            "name": "batch_size_64"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --batch_size 128 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 229.10286211967468,
+            "name": "batch_size_128"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --batch_size 256 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 222.03454995155334,
+            "name": "batch_size_256"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --weight_decay 0 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 175.77892589569092,
+            "name": "weight_decay_0"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --weight_decay 1e-05 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 200.7773790359497,
+            "name": "weight_decay_1e-05"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --weight_decay 0.0001 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 207.64817810058594,
+            "name": "weight_decay_0.0001"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --weight_decay 0.001 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 193.79897809028625,
+            "name": "weight_decay_0.001"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --dropout 0.0 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 49.08957886695862,
+            "name": "dropout_0.0"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --dropout 0.3 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 168.26664400100708,
+            "name": "dropout_0.3"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --dropout 0.5 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 178.3474040031433,
+            "name": "dropout_0.5"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --dropout 0.7 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 244.93077778816223,
+            "name": "dropout_0.7"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --hidden_sizes 64 32 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 52.96124219894409,
+            "name": "hidden_size_1"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --hidden_sizes 128 64 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 118.16977095603943,
+            "name": "hidden_size_2"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --hidden_sizes 256 128 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 250.95947217941284,
+            "name": "hidden_size_3"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --hidden_sizes 512 256 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 395.2273178100586,
+            "name": "hidden_size_4"
+        },
+        {
+            "command": "python3 main.py --preprocess standard --gelu --adam --no_batch_norm --lr 0.0005 --hidden_sizes 256 128 64 --epochs 100 --log_dir logs/best3/hyperparams",
+            "status": "Success",
+            "runtime": 288.8407130241394,
+            "name": "hidden_size_5"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "model_name": "Adam_BatchNorm_GELU_none",
+    "features": [
+        "GELU",
+        "Adam",
+        "BatchNorm"
+    ],
+    "accuracy": 0.1573,
+    "precision": 0.1697562548132097,
+    "recall": 0.1573,
+    "f1_score": 0.12566354298866417,
+    "loss": 2.2256966004243526,
+    "inference_time": 0.5003528594970703,
+    "timestamp": "2025-04-16 09:56:03"
+}
