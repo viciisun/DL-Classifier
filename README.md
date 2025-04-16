@@ -1,58 +1,6 @@
 # Deep Learning Classifier
 
-A comprehensive implementation of a neural network classifier from scratch for COMP4329 Deep Learning assignment.
-
-## Features
-
-### Basic Features
-
-- Multi-layer neural network with customizable architecture
-- ReLU activation functions
-- Weight decay
-- SGD with momentum
-- Dropout regularization
-- Softmax activation and cross-entropy loss
-- Mini-batch training
-- Batch Normalization
-
-### Advanced Features
-
-- GELU activation function
-- Adam optimizer
-- Early stopping
-- Data preprocessing options:
-  - Standard scaling (zero mean, unit variance)
-  - Min-max scaling (range [0,1])
-- Comprehensive evaluation metrics (accuracy, precision, recall, F1-score)
-- Confusion matrix visualization
-- Structured logging and model comparison
-
-## Requirements
-
-```
-numpy
-matplotlib
-scikit-learn
-tqdm
-psutil
-```
-
-Install dependencies with:
-
-```bash
-pip install numpy matplotlib scikit-learn tqdm psutil
-```
-
-## Project Structure
-
-- `main.py`: Main script to run the model
-- `cli.py`: Command line interface and argument parsing
-- `model.py`: Neural network implementation
-- `train.py`: Training functionality
-- `evaluate.py`: Evaluation metrics and visualization
-- `data_loader.py`: Data loading and initial preprocessing
-- `preprocess.py`: Data preprocessing (standard and min-max scaling)
-- `visualize.py`: Visualization utilities
+A comprehensive implementation of a neural network classifier.
 
 ## Instruction
 
@@ -187,3 +135,55 @@ bash run_ablation.sh
 # Run hyperparameter grid search
 bash run_hyperparams.sh
 ```
+
+## Features
+
+### Basic Features
+
+- Multi-layer neural network with customizable architecture
+- ReLU activation functions
+- Weight decay
+- SGD with momentum
+- Dropout regularization
+- Softmax activation and cross-entropy loss
+- Mini-batch training
+- Batch Normalization
+
+### Advanced Features
+
+- GELU activation function
+- Adam optimizer
+- Early stopping
+- Data preprocessing options:
+  - Standard scaling (zero mean, unit variance)
+  - Min-max scaling (range [0,1])
+- Comprehensive evaluation metrics (accuracy, precision, recall, F1-score)
+- Confusion matrix visualization
+- Structured logging and model comparison
+
+## Requirements
+
+```
+numpy
+matplotlib
+scikit-learn
+tqdm
+psutil
+```
+
+Install dependencies with:
+
+```bash
+pip install numpy matplotlib scikit-learn tqdm psutil
+```
+
+## Project Structure
+
+- `main.py`: Main script to run the model
+- `cli.py`: Command line interface and argument parsing
+- `model.py`: Neural network implementation
+- `train.py`: Training functionality
+- `evaluate.py`: Evaluation metrics and visualization
+- `data_loader.py`: Data loading and initial preprocessing
+- `preprocess.py`: Data preprocessing (standard and min-max scaling)
+- `visualize.py`: Visualization utilities
